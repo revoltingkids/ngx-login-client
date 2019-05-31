@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ngx-login-client": [
+        "dist/ngx-login-client"
+      ],
+      "ngx-login-client/*": [
+        "dist/ngx-login-client/*"
+      ]
+    }
   }
 }

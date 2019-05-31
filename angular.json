@@ -114,6 +114,41 @@
           }
         }
       }
+    },
+    "ngx-login-client": {
+      "projectType": "library",
+      "root": "projects/ngx-login-client",
+      "sourceRoot": "projects/ngx-login-client/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngx-login-client/tsconfig.lib.json",
+            "project": "projects/ngx-login-client/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-login-client/src/test.ts",
+            "tsConfig": "projects/ngx-login-client/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-login-client/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-login-client/tsconfig.lib.json",
+              "projects/ngx-login-client/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }},
   "defaultProject": "lib-demo"
 }
