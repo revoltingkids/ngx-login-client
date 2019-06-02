@@ -1,34 +1,72 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, Input, OnDestroy, OnInit} from '@angular/core';
 import {Credentials} from './credentials.model';
+import {AbstractAuthService} from './abstract-auth.service';
+import {LoginConfig} from './login-config.model';
+import {Subscription} from 'rxjs';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
-  selector: 'lib-ngx-login-client',
+  selector: 'rk-login-client',
   templateUrl: './ngx-login-client.component.html',
   styleUrls: ['./ngx-login-client.component.scss']
 })
-export class NgxLoginClientComponent implements OnInit {
+export class NgxLoginClientComponent implements OnInit, OnDestroy {
+
+
+  @Input() config: LoginConfig = {
+    title: 'login',
+    pageHeader: 'RevoltingKids Login Component',
+    errorMsg: 'Wrong login data',
+    userNameLabelText: 'Email Address',
+    passwordLabelText: 'Password',
+    forgotPasswordButtonText: 'Forgot Password',
+    loginButtonText: 'Sign In',
+    passwordValidationMsg: 'Please enter your password.',
+    userNameValidationMsg: 'Please enter your email address.'
+  };
 
   emailAddress: string;
   password: string;
   error = false;
-  isLoading = false;
+  isLoading = false
+  submitted = false;
 
-  constructor() { }
+  loginForm: FormGroup;
+
+  loginSubscription: Subscription;
+
+  constructor(private authService: AbstractAuthService, private fb: FormBuilder) { }
 
   ngOnInit() {
+    this.loginForm = this.fb.group({
+      userName: ['', [Validators.required, Validators.email]],
+      password: ''
+    });
+  }
+
+  ngOnDestroy() {
+    this.loginSubscription.unsubscribe();
   }
 
   login() {
-    this.isLoading = true;
-    const credentials: Credentials = {
-      userName: this.emailAddress,
-      password: this.password
-    };
+    console.log(this.loginForm);
+    console.log('login');
+    this.submitted = true;
+    if (this.loginForm.valid) {
+      this.isLoading = true;
+      const credentials: Credentials = this.loginForm.value;
 
-    /*this.authService.login(credentials).subscribe(
-      () => { this.isLoading = false; },
-      () => { this.error = true; this.isLoading = false; }
-    );*/
+      this.loginSubscription = this.authService.login(credentials).subscribe(
+        (res) => {
+          this.authService.setAccessToken(res);
+        },
+        (error) => {
+          console.log(error);
+          this.error = true;
+          this.isLoading = false;
+        }
+      );
+    }
   }
 
 }

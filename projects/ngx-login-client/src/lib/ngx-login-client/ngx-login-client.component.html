@@ -1,30 +1,36 @@
 <div class="container">
-<div class="card">
-  <div class="card-header text-white bg-primary">
-    DEFUSED
+  <div class="card">
+    <div class="card-header text-white bg-primary">
+      {{config.pageHeader}}
+    </div>
+    <div class="card-body">
+      <form class="form-signin" [formGroup]="loginForm">
+        <h1 class="h5 mb-3 font-weight-normal">{{config.title}}</h1>
+        <div class="alert alert-danger mb-3" role="alert" *ngIf="error">
+          {{config.errorMsg}}
+        </div>
+        <div>
+          <label for="inputEmail" class="sr-only">{{config.userNameLabelText}}</label>
+          <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus formControlName="userName" name="emailAddress" email [ngClass]="{'is-invalid': submitted && loginForm.get('userName').errors}">
+          <div class="invalid-feedback">
+            {{config.userNameValidationMsg}}
+          </div>
+        </div>
+        <div class="mt-1">
+          <label for="inputPassword" class="sr-only">{{config.passwordLabelText}}</label>
+          <input type="password" id="inputPassword" class="form-control" placeholder="Password" required formControlName="password" name="password" [ngClass]="{'is-invalid': submitted && loginForm.get('password').errors}">
+          <div class="invalid-feedback">
+            {{config.passwordValidationMsg}}
+          </div>
+        </div>
+        <button class="btn btn-primary btn-block mt-1" type="submit" (click)="login()" [disabled]="isLoading">
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isLoading"></span>
+          {{config.loginButtonText}}
+        </button>
+        <button class="btn btn-secondary btn-block mt-1" type="submit" (click)="login()">
+          <span>{{config.forgotPasswordButtonText}}</span>
+        </button>
+      </form>
+    </div>
   </div>
-  <div class="card-body">
-    <form class="form-signin" #loginForm="ngForm">
-      <h1 class="h5 mb-3 font-weight-normal">Login</h1>
-      <div class="alert alert-danger mb-3" role="alert" *ngIf="error">
-        Wrong login data
-      </div>
-      <div>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus [(ngModel)]="emailAddress" name="emailAddress" email>
-      </div>
-      <div class="mt-1">
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required [(ngModel)]="password" name="password">
-      </div>
-      <button class="btn btn-primary btn-block mt-1" type="submit" (click)="login()" [disabled]="isLoading">
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isLoading"></span>
-        Sign In
-      </button>
-      <button class="btn btn-secondary btn-block mt-1" type="submit" (click)="login()">Forgot Password</button>
-    </form>
-  </div>
-</div>
-
-
 </div>
