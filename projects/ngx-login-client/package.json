@@ -1,6 +1,11 @@
 {
   "name": "@revoltingkids/ngx-login-client",
-  "version": "0.0.2",
+  "version": "0.0.3",
+  "license": "Mit",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/revoltingkids/ngx-login-client.git"
+  },
   "peerDependencies": {
     "@angular/common": "^8.0.0",
     "@angular/core": "^8.0.0"
