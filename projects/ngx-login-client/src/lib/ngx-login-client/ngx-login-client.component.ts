@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Credentials} from './credentials.model';
 import {AbstractAuthService} from './abstract-auth.service';
 import {LoginConfig} from './login-config.model';
@@ -25,8 +25,6 @@ export class NgxLoginClientComponent implements OnInit, OnDestroy {
     userNameValidationMsg: 'Please enter your email address.'
   };
 
-  emailAddress: string;
-  password: string;
   error = false;
   isLoading = false
   submitted = false;
@@ -49,8 +47,6 @@ export class NgxLoginClientComponent implements OnInit, OnDestroy {
   }
 
   login() {
-    console.log(this.loginForm);
-    console.log('login');
     this.submitted = true;
     if (this.loginForm.valid) {
       this.isLoading = true;
@@ -68,5 +64,4 @@ export class NgxLoginClientComponent implements OnInit, OnDestroy {
       );
     }
   }
-
 }
