@@ -14,6 +14,7 @@ import {AbstractAuthService} from 'ngx-login-client';
 )
 export class AuthService implements AbstractAuthService {
 
+
   jwtHelperService = new JwtHelperService();
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -41,5 +42,12 @@ export class AuthService implements AbstractAuthService {
 
   getAccessToken() {
     return localStorage.getItem('access_token');
+  }
+
+  requestPasswordLink(): Observable<boolean> {
+    return of(true);
+  }
+
+  resetPassword() {
   }
 }

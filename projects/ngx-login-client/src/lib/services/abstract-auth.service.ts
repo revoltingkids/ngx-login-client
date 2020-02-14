@@ -9,5 +9,7 @@ export abstract class AbstractAuthService {
 
   abstract login(credentials);
   abstract setAccessToken(accessToken);
+  abstract requestPasswordLink(email);
+  abstract resetPassword();
 }
 

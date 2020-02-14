@@ -1,14 +1,16 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {Credentials} from './credentials.model';
-import {AbstractAuthService} from './abstract-auth.service';
+import {AbstractAuthService} from '../services/abstract-auth.service';
 import {LoginConfig} from './login-config.model';
-import {Subscription} from 'rxjs';
+import {Subscription, BehaviorSubject} from 'rxjs';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'rk-login-client',
   templateUrl: './ngx-login-client.component.html',
-  styleUrls: ['./ngx-login-client.component.scss']
+  styleUrls: ['./ngx-login-client.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NgxLoginClientComponent implements OnInit, OnDestroy {
 
@@ -25,9 +27,10 @@ export class NgxLoginClientComponent implements OnInit, OnDestroy {
     userNameValidationMsg: 'Please enter your email address.'
   };
 
-  error = false;
-  isLoading = false
-  submitted = false;
+  isLoading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  hasError$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  submitted$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
 
   loginForm: FormGroup;
 
@@ -43,13 +46,15 @@ export class NgxLoginClientComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.loginSubscription.unsubscribe();
+    if (!isNullOrUndefined(this.loginSubscription)) {
+      this.loginSubscription.unsubscribe();
+    }
   }
 
   login() {
-    this.submitted = true;
+    this.submitted$.next(true);
     if (this.loginForm.valid) {
-      this.isLoading = true;
+      this.isLoading$.next(true);
       const credentials: Credentials = this.loginForm.value;
 
       this.loginSubscription = this.authService.login(credentials).subscribe(
@@ -57,11 +62,9 @@ export class NgxLoginClientComponent implements OnInit, OnDestroy {
           this.authService.setAccessToken(res);
         },
         (error) => {
-          console.log(error);
-          this.error = true;
-          this.isLoading = false;
+          this.hasError$.next(true);
         }
-      );
+      ).add(() => this.isLoading$.next(false));
     }
   }
 }

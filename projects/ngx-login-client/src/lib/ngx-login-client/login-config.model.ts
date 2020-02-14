@@ -8,4 +8,9 @@ export class LoginConfig {
   errorMsg?: string;
   userNameValidationMsg?: string;
   passwordValidationMsg?: string;
+  requestLinkButtonText?: string;
+  instruction?: string;
+  requestPasswordSuccessText?: string;
+  newPasswordLabelText?: string;
+  repeatNewPasswordLabelText?: string;
 }
