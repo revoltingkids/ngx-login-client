@@ -7,7 +7,7 @@ import {Subscription} from 'rxjs';
 @Component({
   selector: 'rk-request-password',
   templateUrl: './request-password.component.html',
-  styleUrls: ['./request-password.component.css']
+  styleUrls: ['./request-password.component.scss']
 })
 export class RequestPasswordComponent implements OnInit, OnDestroy {
 
@@ -37,7 +37,9 @@ export class RequestPasswordComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.requestLink$.unsubscribe();
+    if(this.requestLink$ != null) {
+      this.requestLink$.unsubscribe();
+    }
   }
 
   initForm() {

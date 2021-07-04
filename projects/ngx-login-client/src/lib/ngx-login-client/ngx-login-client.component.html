@@ -9,27 +9,29 @@
         <div class="alert alert-danger mb-3" role="alert" *ngIf="hasError$ | async">
           {{config.errorMsg}}
         </div>
-        <div>
-          <label for="inputEmail" class="sr-only">{{config.userNameLabelText}}</label>
+        <div class="mb-3">
+          <label for="inputEmail" class="form-label">{{config.userNameLabelText}}</label>
           <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus formControlName="userName" name="emailAddress" email [ngClass]="{'is-invalid': (submitted$ | async) && loginForm.get('userName').errors}">
           <div class="invalid-feedback">
             {{config.userNameValidationMsg}}
           </div>
         </div>
-        <div class="mt-1">
-          <label for="inputPassword" class="sr-only">{{config.passwordLabelText}}</label>
+        <div class="mb-3">
+          <label for="inputPassword" class="form-label">{{config.passwordLabelText}}</label>
           <input type="password" id="inputPassword" class="form-control" placeholder="Password" required formControlName="password" name="password" [ngClass]="{'is-invalid': (submitted$ | async) && loginForm.get('password').errors}">
           <div class="invalid-feedback">
             {{config.passwordValidationMsg}}
           </div>
         </div>
-        <button class="btn btn-primary btn-block mt-1" type="submit" (click)="login()" [disabled]="(isLoading$ | async)">
-          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="(isLoading$ | async)"></span>
-          {{config.loginButtonText}}
-        </button>
-        <button class="btn btn-secondary btn-block mt-1" type="submit" (click)="login()">
-          <span>{{config.forgotPasswordButtonText}}</span>
-        </button>
+        <div class="text-end">
+          <button class="btn btn-secondary me-1" type="button" (click)="forgotPw()">
+            <span>{{config.forgotPasswordButtonText}}</span>
+          </button>
+          <button class="btn btn-primary" type="button" (click)="login()" [disabled]="(isLoading$ | async)">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="(isLoading$ | async)"></span>
+            {{config.loginButtonText}}
+          </button>
+        </div>
       </form>
     </div>
   </div>

@@ -39,7 +39,9 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.requestLink$.unsubscribe();
+    if (this.requestLink$ != null) {
+      this.requestLink$.unsubscribe();
+    }
   }
 
   initForm() {

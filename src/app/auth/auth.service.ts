@@ -19,6 +19,10 @@ export class AuthService implements AbstractAuthService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
+  navigateToForgotPw(): Promise<boolean> {
+    return this.router.navigateByUrl('/request-password');
+  }
+
   login(credentials): Observable<any> {
     return this.http.post(`${environment.api}/login`, credentials).pipe(
       map((result: any) => {

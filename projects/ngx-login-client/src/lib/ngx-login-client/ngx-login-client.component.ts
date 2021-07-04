@@ -4,7 +4,6 @@ import {AbstractAuthService} from '../services/abstract-auth.service';
 import {LoginConfig} from './login-config.model';
 import {Subscription, BehaviorSubject} from 'rxjs';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'rk-login-client',
@@ -46,7 +45,7 @@ export class NgxLoginClientComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (!isNullOrUndefined(this.loginSubscription)) {
+    if (this.loginSubscription != null) {
       this.loginSubscription.unsubscribe();
     }
   }
@@ -66,5 +65,9 @@ export class NgxLoginClientComponent implements OnInit, OnDestroy {
         }
       ).add(() => this.isLoading$.next(false));
     }
+  }
+
+  forgotPw() {
+    this.authService.navigateToForgotPw();
   }
 }
