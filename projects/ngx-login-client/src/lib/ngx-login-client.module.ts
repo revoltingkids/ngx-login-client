@@ -4,12 +4,14 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import { RequestPasswordComponent } from './request-password/request-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import {  RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [NgxLoginClientComponent, RequestPasswordComponent, ResetPasswordComponent],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    RouterModule
   ],
   exports: [NgxLoginClientComponent, RequestPasswordComponent]
 })

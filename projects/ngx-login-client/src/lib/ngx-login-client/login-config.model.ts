@@ -14,4 +14,6 @@ export class LoginConfig {
   newPasswordLabelText?: string;
   repeatNewPasswordLabelText?: string;
   resetPwButtonText?: string;
+  titleRegister? : string;
+  registerButtonText? : string;
 }

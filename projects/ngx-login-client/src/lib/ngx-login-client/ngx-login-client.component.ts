@@ -13,9 +13,10 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class NgxLoginClientComponent implements OnInit, OnDestroy {
 
+  registerLink: string;
 
   @Input() config: LoginConfig = {
-    title: 'login',
+    title: 'Login',
     pageHeader: 'RevoltingKids Login Component',
     errorMsg: 'Wrong login data',
     userNameLabelText: 'Email Address',
@@ -23,7 +24,9 @@ export class NgxLoginClientComponent implements OnInit, OnDestroy {
     forgotPasswordButtonText: 'Forgot Password',
     loginButtonText: 'Sign In',
     passwordValidationMsg: 'Please enter your password.',
-    userNameValidationMsg: 'Please enter your email address.'
+    userNameValidationMsg: 'Please enter your email address.',
+    titleRegister: 'Register',
+    registerButtonText: 'Register'
   };
 
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -42,6 +45,9 @@ export class NgxLoginClientComponent implements OnInit, OnDestroy {
       userName: ['', [Validators.required, Validators.email]],
       password: ''
     });
+
+    this.config = this.authService.config;
+    this.registerLink = this.authService.registerLink;
   }
 
   ngOnDestroy() {

@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import {AbstractAuthService} from 'ngx-login-client';
+import {AbstractAuthService, LoginConfig} from 'ngx-login-client';
 
 @Injectable(
   {
@@ -18,6 +18,8 @@ export class AuthService implements AbstractAuthService {
   jwtHelperService = new JwtHelperService();
 
   constructor(private http: HttpClient, private router: Router) { }
+  config: LoginConfig;
+  registerLink: string;
 
   navigateToForgotPw(): Promise<boolean> {
     return this.router.navigateByUrl('/request-password');
